@@ -201,86 +201,269 @@
 # print(account.display())
 # del account
 
-#LAB 3 Question 4
-class Shape:
-    def __init__(self):
-        self.area = 0.0
+# #LAB 3 Question 4
+# class Shape:
+#     def __init__(self):
+#         self.area = 0.0
 
-    def calculate_area(self):
-        pass
+#     def calculate_area(self):
+#         pass
 
-    def on_area_change(self):
-        pass
+#     def on_area_change(self):
+#         pass
 
-class Circle(Shape):
-    def __init__(self, radius):
-        super().__init__()
-        self.radius = radius
-        self.pi = 3.141592653589793
-        self.calculate_area()
+# class Circle(Shape):
+#     def __init__(self, radius):
+#         super().__init__()
+#         self.radius = radius
+#         self.pi = 3.141592653589793
+#         self.calculate_area()
 
-    def calculate_area(self):
-        self.area = self.pi * self.radius * self.radius
+#     def calculate_area(self):
+#         self.area = self.pi * self.radius * self.radius
 
-    def on_area_change(self):
-        print("The area of the circle has changed.")
+#     def on_area_change(self):
+#         print("The area of the circle has changed.")
 
-class Triangle(Shape):
-    def __init__(self, base, height):
-        super().__init__()
-        self.base = base
-        self.height = height
-        self.calculate_area()
+# class Triangle(Shape):
+#     def __init__(self, base, height):
+#         super().__init__()
+#         self.base = base
+#         self.height = height
+#         self.calculate_area()
 
-    def calculate_area(self):
-        self.area = 0.5 * self.base * self.height
+#     def calculate_area(self):
+#         self.area = 0.5 * self.base * self.height
 
-    def on_area_change(self):
-        print("The area of the triangle has changed.")
+#     def on_area_change(self):
+#         print("The area of the triangle has changed.")
 
-class Rectangle(Shape):
-    def __init__(self, width, length):
-        super().__init__()
-        self.width = width
-        self.length = length
-        self.calculate_area()
+# class Rectangle(Shape):
+#     def __init__(self, width, length):
+#         super().__init__()
+#         self.width = width
+#         self.length = length
+#         self.calculate_area()
 
-    def calculate_area(self):
-        self.area = self.width * self.length
+#     def calculate_area(self):
+#         self.area = self.width * self.length
 
-    def on_area_change(self):
-        print("The area of the rectangle has changed.")
+#     def on_area_change(self):
+#         print("The area of the rectangle has changed.")
 
 
-def main():
-    circle = Circle(5.0)
-    print(circle.area)
+# def main():
+#     circle = Circle(5.0)
+#     print(circle.area)
 
-    triangle = Triangle(3.0, 4.0)
-    print(triangle.area)
+#     triangle = Triangle(3.0, 4.0)
+#     print(triangle.area)
 
-    rectangle = Rectangle(2.0, 5.0)
-    print(rectangle.area)
+#     rectangle = Rectangle(2.0, 5.0)
+#     print(rectangle.area)
 
-    circle.radius = 10.0
-    circle.calculate_area()
-    circle.on_area_change()
-    print(circle.area)
+#     circle.radius = 10.0
+#     circle.calculate_area()
+#     circle.on_area_change()
+#     print(circle.area)
 
-    triangle.base = 5.0
-    triangle.height = 5.0
-    triangle.calculate_area()
-    triangle.on_area_change()
-    print(triangle.area)
+#     triangle.base = 5.0
+#     triangle.height = 5.0
+#     triangle.calculate_area()
+#     triangle.on_area_change()
+#     print(triangle.area)
 
-    rectangle.width = 2.0
-    rectangle.length = 10.0
-    rectangle.calculate_area()
-    rectangle.on_area_change()
-    print(rectangle.area)
+#     rectangle.width = 2.0
+#     rectangle.length = 10.0
+#     rectangle.calculate_area()
+#     rectangle.on_area_change()
+#     print(rectangle.area)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+
+
+# #LAB 4 Question 1
+# graph = {
+#     'Amina' :['Sara','Razi'],
+#     'Sara'  :['Amina','Razi'],
+#     'Razi'  :['Ali', 'Ahmed'],
+#     'Ali'   :['Razi', 'Ahmed'],
+#     'Ahmed' :['Amina','Ahsan'],
+#     'Rida'  :['Hassan','Taha'],
+#     'Taha'  :['Hassan','Rida'],
+#     'Hassan':['Rida','Taha'],
+#     'Ahsan' :['Uzma','Taha'],
+#     'Uzma'  :['Ahsan','Taha']
+# }
+
+# def pathFunc(graph, strt, end, path=[]):
+#         path = path + [strt]
+#         if strt == end:
+#             return path
+#         if not strt in graph:
+#             return None
+#         for node in graph[strt]:
+#             if node not in path:
+#                 newPath = pathFunc(graph, node, end, path)
+#                 if newPath:
+#                   return newPath
+#         return None
+# final_path = pathFunc(graph, 'Sara', 'Uzma')
+# print("Path:",end=" ")
+# for i in range(len(final_path)-1):
+#     print(final_path[i],end="->")
+# print(final_path[-1])
+
+def graph():
+    graph = {
+        1: [2, 6],
+        2: [5, 3],
+        3: [4],
+        4: [9, 5],
+        5: [8, 6],
+        6: [7],
+        7: [8],
+        8: [9],
+        9: []
+    }
+    return graph
+
+def bfs(graph, start, end):
+    queue = [(start, [start])]
+    visited = [False] * (len(graph.keys()) + 1)  # Fix here
+
+    while queue:
+        node, path = queue.pop(0)
+        if node == end:
+            return path
+
+        if not visited[node]:
+            visited[node] = True
+            neighbors = graph.get(node, [])
+            for neighbor in neighbors:
+                if not visited[neighbor]:
+                    queue.append((neighbor, path + [neighbor]))
+
+    return None
+
+game = graph()
+path = bfs(game, 1, 9)
+
+if path:
+    print("The path from 1 to 9 is:", " -> ".join(map(str, path)))
+else:
+    print("There is no path from 1 to 9.")
+
+
+
+
+#LAB 4 Question 3
+def dfs(graph, start, end, visited, steps):
+    steps.append(start)  
+    if start == end:
+        visited.append(start)
+        return True
+
+    visited.append(start)
+
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            if dfs(graph, neighbor, end, visited, steps):
+                return True
+
+    return False
+
+def bfs(graph, start, end, steps):
+    visited = []
+    queue = []
+
+    queue.append(start)
+    visited.append(start)
+    steps.append(start)  
+
+    while queue:
+        current_node = queue.pop(0)
+        if current_node == end:
+            return True
+
+        for neighbor in graph[current_node]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+                visited.append(neighbor)
+                steps.append(neighbor)  
+
+    return False
+
+
+graph = {
+    0: [1, 3,16],
+    1: [9,0],
+    2: [3, 9,8,7],
+    3: [6,2,0, 9],
+    4: [9, 5,6],
+    5: [9,4],
+    6: [4,3],
+    7: [9,2],
+    8: [9,2],
+    9: [4,5,10,11,20,19,15,18,1,7,8,3],
+    10:[11,9],
+    11:[12,13,9,10],
+    12:[13,11],
+    13:[12,11],
+    14:[15,16],
+    15:[9,18,17,16,14],
+    16:[17,19,14,0,15],
+    17:[15,16,18],
+    18:[15,17,9],
+    19:[9,20,16],
+    20:[9,19]
+}
+
+dfs_visited = []
+dfs_steps = []
+bfs_steps = []
+dfs_time = 0
+bfs_time = 0
+
+#start time 
+import time
+dfs_start = time.time()
+#end time
+end = time.time()
+
+
+if dfs(graph, 0, 20, dfs_visited, dfs_steps):
+    print("DFS:")
+    print("Path exists! Visited nodes:", dfs_visited)
+    print("Steps:", dfs_steps)
+else:
+    print("DFS:")
+    print("Path does not exist!")
+#end time
+dfs_end = time.time()
+#total time
+dfs_time = dfs_end - dfs_start
+print("Time Complexity:"+str(dfs_time)+"In "+str(len(dfs_steps))+" steps")
+bfs_start = time.time()
+if bfs(graph, 0, 20, bfs_steps):
+    print("BFS:")
+    print("Path exists! Steps:", bfs_steps)
+else:
+    print("BFS:")
+    print("Path does not exist!")
+bfs_end = time.time()
+bfs_time = bfs_end - bfs_start
+
+print("Time Complexity:"+str(bfs_time)+"In "+str(len(bfs_steps))+" steps")
+#print which algorithm is faster
+if bfs_time < dfs_time:
+    print("BFS is faster than DFS")
+else:
+    print("DFS is faster than BFS")
+
+
+#calculate time complexity not steps
 
 
 
